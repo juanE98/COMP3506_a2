@@ -69,57 +69,56 @@ public class SortingAlgorithms {
      * @requires input != null
      */
     static <T extends Comparable> void mergeSort(T[] input, boolean reversed) {
-        mergeSortHelper(input, reversed);
+        mergeSortHelper(input, 0, input.length - 1, reversed);
     }
 
     private static <T extends Comparable> void mergeSortHelper(T[] input,
+                                                               int leftStart,
+                                                               int rightEnd,
                                                                boolean reversed){
-        int n = input.length;
-        if(n < 2) {
+        if (leftStart < rightEnd) {
+            int midpoint = (leftStart + rightEnd) / 2;
+            mergeSortHelper(input, leftStart, midpoint, reversed);
+            mergeSortHelper(input, (midpoint + 1), rightEnd, reversed);
+
+            merge(input, leftStart, midpoint, rightEnd, reversed);
+        }
+    }
+
+
+    private static <T extends  Comparable> void merge(T[] input,
+                                                      int leftStart,
+                                                      int midPoint,
+                                                      int rightEnd,
+                                                      boolean reversed){
+        int right = midPoint + 1;
+
+        if(input[midPoint].compareTo(input[right]) <= 0){
             return;
         }
-        int midpoint = (n / 2);
 
-        T[] firstHalf = arrayCopy(input, 0, midpoint);
-        T[] secondHalf = arrayCopy(input, midpoint, n);
-
-        mergeSortHelper(firstHalf, reversed);
-        mergeSortHelper(secondHalf, reversed);
-
-        merge(firstHalf, secondHalf, input, reversed);
-
-    }
-
-
-    private static <T extends  Comparable> void merge(T[] input, T[] firstHalf,
-                                                      T[] secondHalf,
-                                                      boolean reversed){
-        int i = 0 , j = 0;
-
-        while (i + j < input.length){
-            if(j == secondHalf.length || (i < firstHalf.length) &&
-                    firstHalf[i].compareTo(secondHalf[i]) <= 0){
-                input[i + j] = firstHalf[i++];
+        while (leftStart <= midPoint && right <= rightEnd){
+            if(input[leftStart].compareTo(input[right]) <= 0){
+                leftStart++;
             }
             else{
-                input[i + j] = secondHalf[j++];
+                T element = input[right];
+                int index = right;
+
+                while (index != leftStart){
+                    input[index] = input[index - 1];
+                    index--;
+                }
+                input[leftStart] = element;
+
+                leftStart++;
+                midPoint++;
+                right++;
             }
         }
     }
 
 
-    private static <T extends Comparable> T[] arrayCopy (T[] array,
-                                                         int start,
-                                                         int end){
-        T[] copy = (T[])new Comparable[end-start];
-        for(int i = 0; i < copy.length; i++){
-            copy[i] = array[start];
-            start++;
-        }
-        return copy;
-    }
-
-    
     /**
      * Sorts the given array using the quick sort algorithm.
      * This should modify the array in-place.
