@@ -1,10 +1,22 @@
-import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.*;
 
 public class arrayTestTime<T> {
+    /**
+     * Helper function to time all sorting algorithm with the same input size
+     * n.
+     * @param input array with input size n
+     */
+    private static <T extends Comparable> void timeFunction(T[] input){
+        selectionSortTime(input);
+        insertionSortTime(input);
+        mergeSortTime(input);
+        quickSortTime(input);
+    }
 
-
+    /**
+     * Generates an unsorted list of numbers of size n.
+     * @param n size of the array
+     */
     public static <T extends Comparable> void unsortedTest(int n){
         Integer[] unsortedList = new Integer[n];
         Random random = new Random();
@@ -12,13 +24,14 @@ public class arrayTestTime<T> {
             unsortedList[i] = random.nextInt();
         }
         //Time function with input:
-        selectionSortTime(unsortedList);
-        insertionSortTime(unsortedList);
-        mergeSortTime(unsortedList);
-        quickSortTime(unsortedList);
-
+        timeFunction(unsortedList);
     }
 
+    /**
+     * Generates a sorted ascending list of numbers of size n.
+     * @param n size of the array
+     * @param <T>
+     */
     public static <T extends Comparable> void sortedAscending(int n){
         Integer[] ascendingList = new Integer[n];
         Random random = new Random();
@@ -27,13 +40,13 @@ public class arrayTestTime<T> {
         }
         Arrays.sort(ascendingList);
         //Time function with input:
-        selectionSortTime(ascendingList);
-        insertionSortTime(ascendingList);
-        mergeSortTime(ascendingList);
-        quickSortTime(ascendingList);
-
+        timeFunction(ascendingList);
     }
 
+    /**
+     * Generates a sorted descending list of numbers of size n.
+     * @param n size of the array
+     */
     public static <T extends Comparable> void sortedDescending(int n){
         Integer[] descendingList = new Integer[n];
         Random random = new Random();
@@ -43,63 +56,76 @@ public class arrayTestTime<T> {
         Arrays.sort(descendingList, Collections.reverseOrder());
 
         //Time function with input:
-        selectionSortTime(descendingList);
-        insertionSortTime(descendingList);
-        mergeSortTime(descendingList);
-        quickSortTime(descendingList);
-
+        timeFunction(descendingList);
     }
 
+    /**
+     * Timer for selectionSort algorithm
+     * @param input array of size n
+     */
     private static <T extends Comparable> void selectionSortTime(T[] input) {
-        long startTime = System.nanoTime();
+        double startTime = System.nanoTime();
         SortingAlgorithms.selectionSort(input, false);
-        long endTime = System.nanoTime();
-        System.out.println("Selection sort:" + (endTime - startTime));
+        double endTime = System.nanoTime();
+        System.out.println("Selection sort:" + (endTime - startTime) / 1000000);
     }
 
+    /**
+     * Timer for insertionSort algorithm
+     * @param input array of size n
+     */
     private static <T extends Comparable> void insertionSortTime(T[] input){
-        long startTime = System.nanoTime();
+        double startTime = System.nanoTime();
         SortingAlgorithms.insertionSort(input, false);
-        long endTime = System.nanoTime();
-        System.out.println("Insertion sort:" + (endTime - startTime));
+        double endTime = System.nanoTime();
+        System.out.println("Insertion sort:" + (endTime - startTime) / 1000000);
     }
 
+    /**
+     * Timer for mergeSort algorithm
+     * @param input array of size n
+     */
     private static <T extends Comparable> void mergeSortTime(T[] input){
-        long startTime = System.nanoTime();
+        double startTime = System.nanoTime();
         SortingAlgorithms.mergeSort(input, false);
-        long endTime = System.nanoTime();
-        System.out.println("Merge sort:" + (endTime - startTime));
+        double endTime = System.nanoTime();
+        System.out.println("Merge sort:" + (endTime - startTime) / 1000000);
     }
 
+    /**
+     * Timer for quickSort algorithm
+     * @param input array of size n
+     */
     private static <T extends Comparable> void quickSortTime(T[] input){
-        long startTime = System.nanoTime();
+        double startTime = System.nanoTime();
         SortingAlgorithms.quickSort(input, false);
-        long endTime = System.nanoTime();
-        System.out.println("Quick sort:" + (endTime - startTime));
+        double endTime = System.nanoTime();
+        System.out.println("Quick sort:" + (endTime - startTime) / 1000000);
+    }
+
+    /**
+     * Helper function to print results.
+     * @param n size of the array to be tested.
+     */
+    private static void results(int n){
+        System.out.println("\n" + "n = " + n);
+        System.out.println("--unsorted array--");
+        unsortedTest(n);
+        System.out.println("--ascending order--");
+        sortedAscending(n);
+        System.out.println("--descending order--");
+        sortedDescending(n);
+
     }
 
 
     public static void main(String[] args){
-
-        System.out.println("n = 5");
-        System.out.println("--unsorted array--");
-        unsortedTest(5);
-        System.out.println("--ascending order--");
-        sortedAscending(5);
-        System.out.print("--descending order--");
-        sortedDescending(5);
-
-        System.out.println("\n n = 10");
-        System.out.println("--unsorted array--");
-        unsortedTest(10);
-        System.out.println("--ascending order--");
-        sortedAscending(10);
-        System.out.print("--descending order--");
-        sortedDescending(10);
-
-
-
-
-
+        results(5);
+        results(10);
+        results(50);
+        results(100);
+        results(500);
+        results(1000);
+        results(10000);
     }
 }
