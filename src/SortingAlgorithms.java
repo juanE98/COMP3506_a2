@@ -93,12 +93,18 @@ public class SortingAlgorithms {
                                                       boolean reversed){
         int right = midPoint + 1;
 
-        if(input[midPoint].compareTo(input[right]) <= 0){
+        if(input[midPoint].compareTo(input[right]) <= 0 && !reversed == true){
+            return;
+        }
+        else if (input[midPoint].compareTo(input[right]) >= 0 && reversed == true){
             return;
         }
 
         while (leftStart <= midPoint && right <= rightEnd){
-            if(input[leftStart].compareTo(input[right]) <= 0){
+            if(input[leftStart].compareTo(input[right]) <= 0 && !reversed == true){
+                leftStart++;
+            }
+            else if (input[leftStart].compareTo(input[right]) >= 0 && reversed == true){
                 leftStart++;
             }
             else{
