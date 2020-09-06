@@ -72,6 +72,18 @@ public class SortingAlgorithms {
         mergeSortHelper(input, 0, input.length - 1, reversed);
     }
 
+
+    /**
+     * Helper function for merge sort which calls itself recursively to
+     * divide the array
+     * @param input array to be sorted
+     * @param leftStart left index
+     * @param rightEnd right index
+     * @param reversed If false, the array should be sorted ascending.
+     *                   Otherwise, it should be sorted descending.
+     * @param <T>
+     */
+
     private static <T extends Comparable> void mergeSortHelper(T[] input,
                                                                int leftStart,
                                                                int rightEnd,
@@ -85,6 +97,16 @@ public class SortingAlgorithms {
         }
     }
 
+    /**
+     * Merges the 2 subarrays which are sorted ascending if reversed == false
+     * and descending if reversed == true.
+     * @param input array to be sorted
+     * @param leftStart left index
+     * @param midPoint mid index
+     * @param rightEnd right index
+     * @param reversed If false, the array should be sorted ascending.
+     *                   Otherwise, it should be sorted descending.
+     */
 
     private static <T extends  Comparable> void merge(T[] input,
                                                       int leftStart,
@@ -139,7 +161,6 @@ public class SortingAlgorithms {
      */
     static <T extends Comparable> void quickSort(T[] input, boolean reversed) {
         quickSortHelper(input, 0, input.length - 1, reversed);
-
     }
 
 
