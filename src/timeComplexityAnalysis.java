@@ -1,18 +1,5 @@
 import java.util.*;
-
-public class arrayTestTime<T> {
-    /**
-     * Helper function to time all sorting algorithm with the same input size
-     * n.
-     * @param input array with input size n
-     */
-    private static <T extends Comparable> void timeFunction(T[] input){
-        selectionSortTime(input);
-        insertionSortTime(input);
-        mergeSortTime(input);
-        quickSortTime(input);
-    }
-
+public class timeComplexityAnalysis<T> {
     /**
      * Generates an unsorted list of numbers of size n.
      * @param n size of the array
@@ -116,6 +103,18 @@ public class arrayTestTime<T> {
         System.out.println("--descending order--");
         sortedDescending(n);
 
+    }
+
+    /**
+     * Helper function to time all sorting algorithm with the same input size
+     * n.
+     * @param input array with input size n
+     */
+    private static <T extends Comparable> void timeFunction(T[] input){
+        selectionSortTime(input);
+        insertionSortTime(input);
+        mergeSortTime(input);
+        quickSortTime(input);
     }
 
 

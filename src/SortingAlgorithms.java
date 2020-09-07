@@ -10,25 +10,33 @@ public class SortingAlgorithms {
      */
     static <T extends Comparable> void selectionSort(T[] input, boolean reversed) {
         int n = input.length;
+
+        //Iterate over unsorted subarray
         for(int i=0; i< n-1; i++){
             int compIndex =i;
             for (int j = i + 1; j < n; j++) {
+                //Find smaller element
                 if (reversed == false) {
                     if (input[j].compareTo(input[compIndex]) < 0) {
                         compIndex = j;
                     }
                 }
                 else{
+                    //Find bigger element
                     if (input[j].compareTo(input[compIndex]) > 0){
                         compIndex = j;
                     }
                 }
             }
+            //Swap current element with bigger or smaller element
             T temp = input[compIndex];
             input[compIndex] = input[i];
             input[i] = temp;
         }
     }
+
+
+
 
     /**
      * Sorts the given array using the insertion sort algorithm.
@@ -42,8 +50,10 @@ public class SortingAlgorithms {
     static <T extends Comparable> void insertionSort(T[] input, boolean reversed) {
         for (int i = 1; i < input.length; i++){
             int j = i;
+            //Locate hole position for element to be inserted
             if (reversed == false) {
                 while (j > 0 && (input[j - 1].compareTo(input[j]) > 0)) {
+                    //swap elements
                     T temp = input[j];
                     input[j] = input[j - 1];
                     input[j - 1] = temp;
@@ -58,7 +68,9 @@ public class SortingAlgorithms {
                 }
         }
     }
-    
+
+
+
     /**
      * Sorts the given array using the merge sort algorithm.
      * This should modify the array in-place.
@@ -71,6 +83,8 @@ public class SortingAlgorithms {
     static <T extends Comparable> void mergeSort(T[] input, boolean reversed) {
         mergeSortHelper(input, 0, input.length - 1, reversed);
     }
+
+
 
 
     /**
@@ -97,6 +111,8 @@ public class SortingAlgorithms {
         }
     }
 
+
+
     /**
      * Merges the 2 subarrays which are sorted ascending if reversed == false
      * and descending if reversed == true.
@@ -115,6 +131,7 @@ public class SortingAlgorithms {
                                                       boolean reversed){
         int right = midPoint + 1;
 
+        //Base case of recursion call reached
         if(input[midPoint].compareTo(input[right]) <= 0 && !reversed == true){
             return;
         }
@@ -122,7 +139,9 @@ public class SortingAlgorithms {
             return;
         }
 
+        //
         while (leftStart <= midPoint && right <= rightEnd){
+            //If element is in correct position, continue.
             if(input[leftStart].compareTo(input[right]) <= 0 && !reversed == true){
                 leftStart++;
             }
@@ -139,12 +158,15 @@ public class SortingAlgorithms {
                 }
                 input[leftStart] = element;
 
+                //Update pointers to positions of array
                 leftStart++;
                 midPoint++;
                 right++;
             }
         }
     }
+
+
 
 
     /**
@@ -162,6 +184,8 @@ public class SortingAlgorithms {
     static <T extends Comparable> void quickSort(T[] input, boolean reversed) {
         quickSortHelper(input, 0, input.length - 1, reversed);
     }
+
+
 
 
     /**
@@ -187,6 +211,8 @@ public class SortingAlgorithms {
     }
 
 
+
+
     /**
      * Partition method: checks each element and swaps it before the pivot if
      * it is smaller or larger based on boolean of reversed.
@@ -202,25 +228,32 @@ public class SortingAlgorithms {
     private static <T extends Comparable> int partition(T[] input, int left,
                                                         int right, T pivot,
                                                         boolean reversed){
+
         while (left <= right) {
             if (reversed == false) {
+                //Scan until reaching value that is equal or larger than pivot.
                 while (input[left].compareTo(pivot) < 0) {
                     left++;
                 }
+                //scan until reaching value equal or smaller than pivot
                 while (input[right].compareTo(pivot) > 0) {
                     right--;
                 }
             }
             else {
+                //Scan until reaching value that is equal or smaller than pivot.
                 while (input[left].compareTo(pivot) > 0) {
                     left++;
                 }
+                //Scan until reaching value that is equal or larger than pivot.
                 while (input[right].compareTo(pivot) < 0) {
                     right--;
                 }
             }
 
-            if (left <= right) {
+
+            if (left <= right) { //indices did not cross over
+                //swap values.
                 T temp = input[left];
                 input[left] = input[right];
                 input[right] = temp;
