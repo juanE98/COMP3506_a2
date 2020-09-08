@@ -1,11 +1,13 @@
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-
+/**
+ * Space complexity:
+ * @param <T>
+ */
 public class SimpleArrayDeque<T> implements SimpleDeque<T> {
     //Array properties:
-    private int capacity; //current capacity of array
+    private int capacity; //capacity of deque
     private int head; //index of the head element
     private int tail; //index of the tail element
 
@@ -14,7 +16,9 @@ public class SimpleArrayDeque<T> implements SimpleDeque<T> {
 
     /**
      * Constructs a new array based deque with limited capacity.
-     * 
+     *
+     * Time Complexity:
+     * Space Complexity:
      * @param capacity the capacity
      * @throws IllegalArgumentException if capacity <= 0
      */
@@ -34,6 +38,9 @@ public class SimpleArrayDeque<T> implements SimpleDeque<T> {
      * Constructs a new array based deque with limited capacity, and initially populates the deque
      * with the elements of another SimpleDeque.
      *
+     * Time Complexity:
+     * Space Complexity:
+     *
      * @param otherDeque the other deque to copy elements from. otherDeque should be left intact.
      * @param capacity the capacity
      * @throws IllegalArgumentException if capacity <= 0 or size of otherDeque is > capacity
@@ -43,29 +50,46 @@ public class SimpleArrayDeque<T> implements SimpleDeque<T> {
         if(capacity <= 0 || otherDeque.size() > capacity ){
             throw new IllegalArgumentException();
         }
-        this.arrayDeque = (T[]) Arrays.copyOf(new SimpleDeque[]{otherDeque},
-                capacity);
+        this.arrayDeque = (T[]) new Comparable[capacity];
         this.capacity = capacity;
+        copyArray(this.arrayDeque,otherDeque);
         this.head = 0;
         this.tail = otherDeque.size() - 1;
+    }
 
+    /**
+     * Copies another SimpleDeque into current deque.
+     *
+     * Time Complexity:
+     * Space Complexity:
+     * @param arrayDeque the array deque to be constructed.
+     * @param otherDeque other deque to be copied from
+     */
+    private void copyArray(T[] arrayDeque, SimpleDeque<? extends T> otherDeque) {
+        for (int i = 0; i < otherDeque.size(); i++){
+            try{
+                arrayDeque[i] = otherDeque.peekRight();
+            }
+            catch(NoSuchElementException e){
+                return;
+            }
+        }
     }
 
 
+    /**
+     * Time Complexity: O(1)
+     * Space Complexity: O(1)
+     * @return
+     */
     @Override
     public boolean isEmpty() {
-        if (this.head == this.tail) {
-            return true;
-        }
-        return false;
+        return (this.head == this.tail);
     }
 
     @Override
     public boolean isFull() {
-        if (this.head == (this.tail + 1) % capacity) {
-            return true;
-        }
-        return false;
+        return (this.head == (this.tail + 1) % capacity);
     }
 
     @Override
