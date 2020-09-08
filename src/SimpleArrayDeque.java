@@ -23,7 +23,7 @@ public class SimpleArrayDeque<T> implements SimpleDeque<T> {
      * @throws IllegalArgumentException if capacity <= 0
      */
     public SimpleArrayDeque(int capacity) throws IllegalArgumentException {
-        if(capacity > 0 && capacity == (int) capacity){
+        if(capacity > 0){
             this.arrayDeque = (T[]) new Comparable[capacity];
             this.capacity = capacity;
             this.head = 0;
@@ -89,7 +89,7 @@ public class SimpleArrayDeque<T> implements SimpleDeque<T> {
 
     @Override
     public boolean isFull() {
-        return (this.head == (this.tail + 1) % capacity);
+        return (head == (tail + 1) % capacity);
     }
 
     @Override
@@ -102,23 +102,22 @@ public class SimpleArrayDeque<T> implements SimpleDeque<T> {
 
     @Override
     public void pushLeft(T e) throws RuntimeException {
-        if (isFull() == true){
+        if (isFull() == true && (this.head != 0 && this.tail != 0)){
             throw new RuntimeException();
         }
         //Go back in the array
-        this.arrayDeque[(this.head + capacity - 1) % capacity] = e;
-        this.head = ((this.head + capacity - 1) % capacity);
-
+        this.arrayDeque[(head + capacity - 1) % capacity] = e;
+        this.head = ((head + capacity - 1) % capacity);
     }
 
     @Override
     public void pushRight(T e) throws RuntimeException {
-        if (isFull() == true){
+        if (isFull() == true && (this.head != 0 && this.tail != 0)){
             throw new RuntimeException();
         }
         //Go forward in the array
-        this.arrayDeque[(this.tail + 1) % capacity] = e;
-        this.tail = (this.tail + 1) % capacity;
+        this.arrayDeque[(tail + 1) % capacity] = e;
+        this.tail = (tail + 1) % capacity;
 
     }
 
