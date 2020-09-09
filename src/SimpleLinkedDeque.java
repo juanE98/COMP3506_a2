@@ -1,31 +1,36 @@
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-//Nodes of the doubly linked list.
-class Node <T> {
-    int data;
-    Node<T> next;
-    Node<T> previous;
-}
 
+/**
+ *  Space Complexity: O(1) for member variables
+ * @param <T>
+ */
 public class SimpleLinkedDeque<T> implements SimpleDeque<T> {
 
-    //Memmber Variables
+    //Member Variables
     private int capacity; //deque's limited capacity
-    private Node <T> head;
-    private Node <T> tail;
+    private Node <T> head; //head node
+    private Node <T> tail; //tail node
 
-
+    /**
+     * inner class for a node
+     * Time Complexity: O(1)
+     * Space Complexity: O(1)
+     *
+     */
     class Node<T> {
-        T data;
-        Node<T> next;
-        Node<T> previous;
-        public Node(T data, Node next, Node previous) {
-            this.data = data;
-            this.next = next;
-            this.previous = previous;
-        }
+        //member variables for class Node:
+        T data; //data node stores
+        Node<T> next; //pointer to next node
+        Node<T> previous; //pointer to previous node
 
+        /**
+         * constructor for a node
+         * Time Complexity: O(1)
+         * Space Complexity: O(1)
+         * @param e data stored in node
+         */
         public Node(T e) {
             this.data = e;
         }
@@ -34,6 +39,9 @@ public class SimpleLinkedDeque<T> implements SimpleDeque<T> {
 
     /**
      * Constructs a new linked list based deque with unlimited capacity.
+     * Time Complexity: O(1)
+     * Space Complexity: O(1) assuming capacity assigned with MAX_VALUE takes
+     * constant time.
      */
     public SimpleLinkedDeque() {
         this.capacity = Integer.MAX_VALUE;
@@ -43,7 +51,8 @@ public class SimpleLinkedDeque<T> implements SimpleDeque<T> {
 
     /**
      * Constructs a new linked list based deque with limited capacity.
-     *
+     * Time Complexity: O(1)
+     * Space Complexity: O(1)
      * @param capacity the capacity
      * @throws IllegalArgumentException if capacity <= 0
      */
@@ -61,6 +70,9 @@ public class SimpleLinkedDeque<T> implements SimpleDeque<T> {
      * Constructs a new linked list based deque with unlimited capacity, and initially 
      * populates the deque with the elements of another SimpleDeque.
      *
+     * Time Complexity: O(n) will depend on the size of the otherDeque.
+     * Space Complexity: O(n) creating number of Nodes based on the nodes on
+     * the OtherDeque.
      * @param otherDeque the other deque to copy elements from. otherDeque should be left intact.
      * @requires otherDeque != null
      */
@@ -71,13 +83,17 @@ public class SimpleLinkedDeque<T> implements SimpleDeque<T> {
             if (this.head == null){
                 this.pushRight((T) i.next());
             }
-            this.pushRight((T) i.next());
+                this.pushRight((T) i.next());
         }
     }
     
     /**
      * Constructs a new linked list based deque with limited capacity, and initially 
      * populates the deque with the elements of another SimpleDeque.
+     *
+     * Time Complexity: O(n) will depend on the size of the otherDeque.
+     * Space Complexity: O(n) creating number of Nodes based on the nodes on
+     * the OtherDeque.
      *
      * @param otherDeque the other deque to copy elements from. otherDeque should be left intact.
      * @param capacity the capacity
@@ -98,11 +114,20 @@ public class SimpleLinkedDeque<T> implements SimpleDeque<T> {
     }
 
 
+    /**
+     * Time Complexity: O(1)
+     * Space Complexity: O(1)
+     */
     @Override
     public boolean isEmpty() {
         return (this.head == null);
     }
 
+    /**
+     * Time Complexity: O(n) traversing will loop over the number of nodes.
+     * Space Complexity: O(1) no new nodes are created that depend on the
+     * size of the deque.
+     */
     @Override
     public boolean isFull() {
         int counter = 0;
@@ -119,6 +144,10 @@ public class SimpleLinkedDeque<T> implements SimpleDeque<T> {
         return false;
     }
 
+    /**
+     * Time Complexity: O(n) traversing will loop over the number of nodes.
+     * Space Complexity: O(1) no new nodes are created.
+     */
     @Override
     public int size() {
         int counter = 0;
@@ -131,6 +160,10 @@ public class SimpleLinkedDeque<T> implements SimpleDeque<T> {
         return counter;
     }
 
+    /**
+     * Time Complexity: O(1)
+     * Space Complexity: O(1)
+     */
     @Override
     public void pushLeft(T e) throws RuntimeException {
         if (isFull()){
@@ -147,6 +180,10 @@ public class SimpleLinkedDeque<T> implements SimpleDeque<T> {
         this.head = newNode;
     }
 
+    /**
+     * Time Complexity: O(1)
+     * Space Complexity: O(1)
+     */
     @Override
     public void pushRight(T e) throws RuntimeException {
         if (isFull()){
@@ -163,6 +200,10 @@ public class SimpleLinkedDeque<T> implements SimpleDeque<T> {
         this.tail = newNode;
     }
 
+    /**
+     * Time Complexity: O(1)
+     * Space Complexity: O(1)
+     */
     @Override
     public T peekLeft() throws NoSuchElementException {
         if (isEmpty()) {
@@ -171,6 +212,10 @@ public class SimpleLinkedDeque<T> implements SimpleDeque<T> {
         return this.head.data;
     }
 
+    /**
+     * Time Complexity: O(1)
+     * Space Complexity: O(1)
+     */
     @Override
     public T peekRight() throws NoSuchElementException {
         if (isEmpty()) {
@@ -179,6 +224,10 @@ public class SimpleLinkedDeque<T> implements SimpleDeque<T> {
         return this.tail.data;
     }
 
+    /**
+     * Time Complexity: O(1)
+     * Space Complexity: O(1)
+     */
     @Override
     public T popLeft() throws NoSuchElementException {
         if (isEmpty()) {
@@ -190,6 +239,10 @@ public class SimpleLinkedDeque<T> implements SimpleDeque<T> {
         return element;
     }
 
+    /**
+     * Time Complexity: O(1)
+     * Space Complexity: O(1)
+     */
     @Override
     public T popRight() throws NoSuchElementException {
         if (isEmpty()) {
@@ -201,6 +254,10 @@ public class SimpleLinkedDeque<T> implements SimpleDeque<T> {
         return element;
     }
 
+    /**
+     * Time Complexity: O(1)
+     * Space Complexity: O(1)
+     */
     @Override
     public Iterator<T> iterator() {
         Iterator<T> iterator = new Iterator<T>() {
@@ -222,6 +279,10 @@ public class SimpleLinkedDeque<T> implements SimpleDeque<T> {
         return iterator;
     }
 
+    /**
+     * Time Complexity: O(1)
+     * Space Complexity: O(1)
+     */
     @Override
     public Iterator<T> reverseIterator() {
         Iterator<T> iterator = new Iterator<T>() {

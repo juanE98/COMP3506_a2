@@ -2,7 +2,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
- * Space complexity:
+ * Space complexity: O(1) for member variables
  * @param <T>
  */
 public class SimpleArrayDeque<T> implements SimpleDeque<T> {
@@ -16,9 +16,8 @@ public class SimpleArrayDeque<T> implements SimpleDeque<T> {
 
     /**
      * Constructs a new array based deque with limited capacity.
-     *
-     * Time Complexity:
-     * Space Complexity:
+     *Time Complexity: O(n)
+     * Space Complexity: O(n)
      * @param capacity the capacity
      * @throws IllegalArgumentException if capacity <= 0
      */
@@ -38,8 +37,9 @@ public class SimpleArrayDeque<T> implements SimpleDeque<T> {
      * Constructs a new array based deque with limited capacity, and initially populates the deque
      * with the elements of another SimpleDeque.
      *
-     * Time Complexity:
-     * Space Complexity:
+     * Time Complexity: O(n). This method calls on arrayCopy which has a time
+     * complexity O(n). n is the size of otherDeque.
+     * Space Complexity: O(n)
      *
      * @param otherDeque the other deque to copy elements from. otherDeque should be left intact.
      * @param capacity the capacity
@@ -59,9 +59,10 @@ public class SimpleArrayDeque<T> implements SimpleDeque<T> {
 
     /**
      * Copies another SimpleDeque into current deque.
-     *
-     * Time Complexity:
-     * Space Complexity:
+     * Time Complexity: O(n) , copies all the elements from otherDeque which
+     * depends on the size of otherDeque.
+     * Space Complexity: O(n) memory used will depend on the size of
+     * otherDeque.
      * @param arrayDeque the array deque to be constructed.
      * @param otherDeque other deque to be copied from
      */
@@ -78,20 +79,28 @@ public class SimpleArrayDeque<T> implements SimpleDeque<T> {
 
 
     /**
-     * Time Complexity: O(1)
+     * Time Complexity: O(1) independent of the size of the deque
      * Space Complexity: O(1)
-     * @return
+     *
      */
     @Override
     public boolean isEmpty() {
         return (this.head == this.tail);
     }
 
+    /**
+     * Time Complexity: O(1) independent of the size of the deque
+     * Space Complexity: O(1)
+     */
     @Override
     public boolean isFull() {
         return (head == (tail + 1) % capacity);
     }
 
+    /**
+     * Time Complexity: O(1) independent of the size of the deque.
+     * Space Complexity: O(1)
+     */
     @Override
     public int size() {
         if (this.tail > this.head){
@@ -100,6 +109,10 @@ public class SimpleArrayDeque<T> implements SimpleDeque<T> {
         return this.capacity - (this.head - this.tail);
     }
 
+    /**
+     * Time Complexity: O(1) independent of the size of the deque.
+     * Space Complexity: O(1)
+     */
     @Override
     public void pushLeft(T e) throws RuntimeException {
         if (isFull() == true && (this.head != 0 && this.tail != 0)){
@@ -110,6 +123,10 @@ public class SimpleArrayDeque<T> implements SimpleDeque<T> {
         this.head = ((head + capacity - 1) % capacity);
     }
 
+    /**
+     * Time Complexity: O(1) independent of the size of the deque.
+     * Space Complexity: O(1)
+     */
     @Override
     public void pushRight(T e) throws RuntimeException {
         if (isFull() == true && (this.head != 0 && this.tail != 0)){
@@ -121,6 +138,10 @@ public class SimpleArrayDeque<T> implements SimpleDeque<T> {
 
     }
 
+    /**
+     * Time Complexity: O(1) independent of the size of the deque.
+     * Space Complexity: O(1)
+     */
     @Override
     public T peekLeft() throws NoSuchElementException {
         if (arrayDeque[((this.head + capacity - 1) % capacity)] == null){
@@ -129,6 +150,10 @@ public class SimpleArrayDeque<T> implements SimpleDeque<T> {
         return this.arrayDeque[this.head];
     }
 
+    /**
+     * Time Complexity: O(1) independent of the size of the deque.
+     * Space Complexity: O(1)
+     */
     @Override
     public T peekRight() throws NoSuchElementException {
         if (arrayDeque[(this.tail + 1) % capacity] == null){
@@ -137,6 +162,10 @@ public class SimpleArrayDeque<T> implements SimpleDeque<T> {
         return this.arrayDeque[this.tail];
     }
 
+    /**
+     * Time Complexity: O(1) independent of the size of the deque.
+     * Space Complexity: O(1)
+     */
     @Override
     public T popLeft() throws NoSuchElementException {
         if (this.isEmpty()){
@@ -151,6 +180,10 @@ public class SimpleArrayDeque<T> implements SimpleDeque<T> {
         return element;
     }
 
+    /**
+     * Time Complexity: O(1) independent of the size of the deque.
+     * Space Complexity: O(1)
+     */
     @Override
     public T popRight() throws NoSuchElementException {
         if (this.isEmpty()){
@@ -164,7 +197,10 @@ public class SimpleArrayDeque<T> implements SimpleDeque<T> {
         return element;
     }
 
-
+    /**
+     * Time Complexity: O(1)
+     * Space Complecity: O(1)
+     */
     @Override
     public Iterator<T> iterator() {
         Iterator<T> iterator = new Iterator<T>() {
@@ -185,7 +221,10 @@ public class SimpleArrayDeque<T> implements SimpleDeque<T> {
         return iterator;
     }
 
-
+    /**
+     * Time Complexity: O(1)
+     * Space Complecity: O(1)
+     */
     @Override
     public Iterator<T> reverseIterator() {
         Iterator<T> iterator = new Iterator<T>() {
